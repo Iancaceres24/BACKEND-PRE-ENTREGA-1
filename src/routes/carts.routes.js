@@ -41,7 +41,7 @@ router.post("/", async(req,res)=>{
         carritos: cart
     })
 })
-router.post("/:cid/products/:pid", async(req,res)=>{
+router.post("/:cid/products /:pid", async(req,res)=>{
     const cid = req.params.cid
     const pid = req.params.pid
 

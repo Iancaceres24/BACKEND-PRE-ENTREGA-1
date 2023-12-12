@@ -59,7 +59,7 @@ updateProduct = async (id, update) => {
         
     };
     
-      updateProductList= async(newProductList)=>{
+        updateProductList= async(newProductList)=>{
         await fs.promises.writeFile(this.path, JSON.stringify(newProductList, null, "\t"));}
 
 }

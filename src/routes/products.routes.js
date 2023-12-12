@@ -11,6 +11,8 @@ router.get("/", async(req,res)=>{
         status:"succes",
         productos: productos    
     })
+    // res.render("home",{productos})
+    
 })
 
 router.get("/:pid", async (req, res) => {
@@ -29,22 +31,30 @@ router.get("/:pid", async (req, res) => {
     }
 });
 
-router.post("/", async(req,res)=>{
-    const producto = req.body
-    const productos = await productManagerFile.crearProducto(producto)
-    if(!producto.title||!producto.description||!producto.code||!producto.price||!producto.stock||!producto.category){
-        res.send({
-            status:"error",
-            msg: "Faltan campos"
-        })
-    }else{
-    res.send({
-        status:"succes",
+
+router.post("/", async (req, res) => {
+    const producto = req.body;
+  
+    if (!producto.title || !producto.description || !producto.code || !producto.price || !producto.stock || !producto.category) {
+      res.send({
+        status: "error",
+        msg: "Faltan campos"
+      });
+    } else {
+      
+        const productos = await productManagerFile.crearProducto(producto);
+  
+    
+        req.socketServer.emit("updateProducts", { productos });
+  
+      
+      res.send({
+        status: "succes",
         msg: "Producto creado",
         productos: producto
-    })}
-})
-
+      });
+    }
+  });
 router.put("/:pid", async(req,res)=>{
     const productos = await productManagerFile.getProducts()   
     const pid = req.params.pid
@@ -82,6 +92,8 @@ router.delete("/:pid", async (req, res) => {
         const productoEliminado = productos.splice(index, 1)[0];
 
         await productManagerFile.updateProductList(productos);
+
+        req.socketServer.emit("updateProducts", { productos });
 
         res.send({
             status: "Correcto",

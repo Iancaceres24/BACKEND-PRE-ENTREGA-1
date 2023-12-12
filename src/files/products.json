@@ -20,5 +20,16 @@
 		"id": "2",
 		"status": true,
 		"thumbnails": []
+	},
+	{
+		"title": "Banana",
+		"description": "Una rica pera",
+		"code": "124262321",
+		"price": "$10",
+		"stock": "50",
+		"category": "Fruta",
+		"id": "21",
+		"status": true,
+		"thumbnails": []
 	}
 ]
